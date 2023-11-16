@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+	<head>
+	<title>booted and in git</title>
+	<meta name="description" content="Our first page">
+	<meta name="keywords" content="html tutorial template">
+	
+	
+	<style>
+body {background-color: powderblue;}
+
+#container{
+	background-color: white;
+	width: 50%;
+	padding: 15px;
+}
+
+#container select, input, textarea{
+	width: 80%;
+	padding: 10px;
+	margin: 10px;
+}
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    console.log("DOM fully loaded and parsed, yippy kai aye ...");
+    
+    var btn = document.getElementById("get_speech_btn");
+    btn.addEventListener("click", getSpeech);
+    
+    
+  });
+  
+   async function getSpeech(e) {
+	   
+	   e.preventDefault();
+	   
+	  
+  //const response = await fetch("http://example.com/movies.json");
+  //const movies = await response.json();
+  //console.log(movies);
+  
+  // http://localhost:171/voices
+  
+  
+  
+  	var txt = document.querySelector("#txt2Speech").value;
+  	var voiceId = document.querySelector("#voiceOf").value;
+  	
+  	console.log("txt ISSY: "+txt);
+  	console.log("selected Option ISSY: "+voiceId);
+  	
+  
+  
+  
+    const rawResponse = await fetch('http://localhost:171/voices', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({voiceId: voiceId, txt: txt}
+    )
+        
+  });
+  
+  console.log("-- posted content --");
+  const content = await rawResponse.json();
+  
+  console.log("response = "+JSON.stringify(content));
+
+  console.log(content);
+  
+  
+	}
+
+
+
+</script>
+
+
+	</head>
+	<body>
+		
+		
+		<div id="container">
+		
+		<form action="/action_page.php">
+			
+			Select voice<br />
+			
+		  <select name="voice" id="voiceOf">
+			  <option value="bob">Bob</option>
+			  <option value="sue">Sue</option>
+			  <option value="jon">Jon</option>
+		  </select>
+		  
+		  <br />	
+		  Type speech text here
+		  <br />	  
+		  
+		    <textarea id="txt2Speech" name="" placeholder="type speech here" required></textarea>
+		    
+		    
+		    <br />
+		    <input id="get_speech_btn" type="submit" value="Get Sound file">
+			  
+		</form>
+		</div> 
+
+
+
+
+
+	</body>
+</html>
